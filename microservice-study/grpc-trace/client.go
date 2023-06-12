@@ -7,11 +7,14 @@ import (
 	"github.com/uber/jaeger-client-go/config"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+
+	//"google.golang.org/grpc/examples/helloworld"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
+
 	"io"
-	pb "micro/proto/hello"
+	//pb "micro/proto/hello"
 	"time"
 )
 
