@@ -5,7 +5,7 @@ import (
 	pb "github.com/Henry-jk/jaeger-test/microservice-study/helloworld/proto"
 	"context"
 	_ "fmt"
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	_ "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
@@ -71,7 +71,8 @@ func main2(){
 */
 func loggingUnaryServerInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 	md, _ := metadata.FromIncomingContext(ctx)
-	fmt.Printf("Metadata received from client: %v\n", md)
+	log.Printf("metadata: %v", md)
+	//fmt.Printf("Metadata received from client: %v\n", md)
 	return handler(ctx, req)
 }
 
@@ -99,7 +100,7 @@ func main() {
 
 	pb.RegisterGreeterServer(s, new (HelloServiceImply))
 
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", ":8888")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

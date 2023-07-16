@@ -7,6 +7,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/config"
+	_ "google.golang.org/genproto/googleapis/bigtable/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"log"
@@ -44,7 +45,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	_, err = c.SayHello(ctx, &pb.HelloRequest{})
+	resp, err := c.SayHello(ctx, &pb.HelloRequest{})
+	log.Printf("Resp === %v",resp)
 	if err != nil {
 		log.Fatalf("could not call: %v", err)
 	}
