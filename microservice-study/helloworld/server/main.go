@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	_ "fmt"
 	pb "github.com/Henry-jk/jaeger-test/microservice-study/helloworld/proto"
 	"context"
 	_ "fmt"
