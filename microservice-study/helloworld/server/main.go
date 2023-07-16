@@ -15,6 +15,7 @@ import (
 	"log"
 	Log "github.com/opentracing/opentracing-go/log"
 	"net"
+	"os"
 )
 type HelloServiceImply struct {
 	pb.UnimplementedGreeterServer
@@ -78,6 +79,7 @@ func loggingUnaryServerInterceptor(ctx context.Context, req interface{}, info *g
 
 
 func main() {
+	os.Setenv("JAEGER_SERVICE_NAME", "myservice")
 	// Jaeger tracer 初始化
 	cfg, err:= config.FromEnv()
 	if err != nil {
