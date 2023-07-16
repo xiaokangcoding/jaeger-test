@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"log"
+	"os"
 	"time"
 
 	pb "github.com/Henry-jk/jaeger-test/microservice-study/helloworld/proto"
@@ -25,6 +26,7 @@ func loggingUnaryClientInterceptor(ctx context.Context, method string, req, repl
 }
 
 func main() {
+	os.Setenv("JAEGER_SERVICE_NAME", "myclientservice")
 	// Jaeger tracer 初始化
 	cfg, _ := config.FromEnv()
 	tracer, closer, _ := cfg.NewTracer(config.Logger(jaeger.StdLogger))
