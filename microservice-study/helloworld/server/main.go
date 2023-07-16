@@ -78,10 +78,18 @@ func loggingUnaryServerInterceptor(ctx context.Context, req interface{}, info *g
 
 
 func main() {
-
 	// Jaeger tracer 初始化
-	cfg, _ := config.FromEnv()
-	tracer, closer, _ := cfg.NewTracer(config.Logger(jaeger.StdLogger))
+	cfg, err:= config.FromEnv()
+	if err != nil {
+		// 错误处理逻辑
+		log.Fatal(err)
+	}
+	tracer, closer, err := cfg.NewTracer(config.Logger(jaeger.StdLogger))
+	if err != nil {
+		// 错误处理逻辑
+		log.Fatal(err)
+	}
+
 	defer closer.Close()
 	opentracing.SetGlobalTracer(tracer)
 
