@@ -15,7 +15,7 @@ import (
 	"log"
 	Log "github.com/opentracing/opentracing-go/log"
 	"net"
-	"os"
+	_ "os"
 	"time"
 )
 type HelloServiceImply struct {

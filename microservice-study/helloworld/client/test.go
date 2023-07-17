@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"log"
-	"os"
+	_ "os"
 	"time"
 
 	pb "github.com/Henry-jk/jaeger-test/microservice-study/helloworld/proto"
