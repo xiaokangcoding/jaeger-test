@@ -82,7 +82,7 @@ func myInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerI
 
 	// 在这里添加你需要的标签
 	span.SetTag("mykey", "myvalue")
-
+	log.Println("11111111111111111111111111111111111")
 	// 然后继续原来的RPC处理
 	return handler(ctx, req)
 }
