@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"log"
-	Log "github.com/opentracing/opentracing-go/log"
+	_ "github.com/opentracing/opentracing-go/log"
 	"net"
 	_ "os"
 	"time"
@@ -29,22 +29,23 @@ func Respone(name string) (string,error) {
 
 func (p *HelloServiceImply) SayHello(ctx context.Context,in *pb.HelloRequest)(*pb.HelloReply, error){
 	// 埋点
-	span, _ := opentracing.StartSpanFromContext(ctx, "SayHello")
-	defer span.Finish()
-	span.SetTag("Request", in)
+	//span, _ := opentracing.StartSpanFromContext(ctx, "SayHello")
+	//defer span.Finish()
+	//span.SetTag("Request", in)
 	// 实现你的方法
 	// TODO
-	resp, err :=Respone(in.Name)
-	if err != nil {
-		span.SetTag("error", true)
-		span.LogFields(
-			Log.String("event", "error"),
-			Log.String("message", err.Error()),
-		)
-	}
+	//resp, err :=Respone(in.Name)
+	//if err != nil {
+	//	span.SetTag("error", true)
+	//	span.LogFields(
+	//		Log.String("event", "error"),
+	//		Log.String("message", err.Error()),
+	//	)
+	//}
+	resp, _ :=Respone(in.Name)
 	response := &pb.HelloReply{Message: resp}
 
-	span.SetTag("Response", response)
+	//span.SetTag("Response", response)
 	log.Printf("Received: %v", in.GetName())
 	return response, nil
 }
