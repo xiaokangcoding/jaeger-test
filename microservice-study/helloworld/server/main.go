@@ -16,6 +16,7 @@ import (
 	Log "github.com/opentracing/opentracing-go/log"
 	"net"
 	"os"
+	"time"
 )
 type HelloServiceImply struct {
 	pb.UnimplementedGreeterServer
@@ -88,13 +89,27 @@ func myInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerI
 }
 
 func main() {
-	os.Setenv("JAEGER_SERVICE_NAME", "myservice")
+//	os.Setenv("JAEGER_SERVICE_NAME", "myservice")
 	// Jaeger tracer 初始化
-	cfg, err:= config.FromEnv()
-	if err != nil {
-		// 错误处理逻辑
-		log.Fatal(err)
+	//cfg, err:= config.FromEnv()
+
+	cfg := config.Configuration{
+		ServiceName: "mygrpcservice",
+		Sampler: &config.SamplerConfig{
+			Type:  jaeger.SamplerTypeConst,
+			Param: 1,
+		},
+		Reporter: &config.ReporterConfig{
+			LogSpans:            true,
+			BufferFlushInterval: 1 * time.Second,
+			LocalAgentHostPort:  "localhost:6831",
+		},
 	}
+
+	//if err != nil {
+	//	// 错误处理逻辑
+	//	log.Fatal(err)
+	//}
 	tracer, closer, err := cfg.NewTracer(config.Logger(jaeger.StdLogger))
 	if err != nil {
 		// 错误处理逻辑

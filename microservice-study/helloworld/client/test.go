@@ -26,9 +26,22 @@ func loggingUnaryClientInterceptor(ctx context.Context, method string, req, repl
 }
 
 func main() {
-	os.Setenv("JAEGER_SERVICE_NAME", "myclientservice")
+	//os.Setenv("JAEGER_SERVICE_NAME", "myclientservice")
 	// Jaeger tracer 初始化
-	cfg, _ := config.FromEnv()
+	//cfg, _ := config.FromEnv()
+	cfg := config.Configuration{
+		ServiceName: "mygrpcclientservice",
+		Sampler: &config.SamplerConfig{
+			Type:  jaeger.SamplerTypeConst,
+			Param: 1,
+		},
+		Reporter: &config.ReporterConfig{
+			LogSpans:            true,
+			BufferFlushInterval: 1 * time.Second,
+			LocalAgentHostPort:  "localhost:6831",
+		},
+	}
+
 	tracer, closer, _ := cfg.NewTracer(config.Logger(jaeger.StdLogger))
 	defer closer.Close()
 	opentracing.SetGlobalTracer(tracer)
