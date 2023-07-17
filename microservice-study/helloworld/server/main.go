@@ -76,7 +76,16 @@ func loggingUnaryServerInterceptor(ctx context.Context, req interface{}, info *g
 	//fmt.Printf("Metadata received from client: %v\n", md)
 	return handler(ctx, req)
 }
+func myInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+	span, _ := opentracing.StartSpanFromContext(ctx, info.FullMethod)
+	defer span.Finish()
 
+	// 在这里添加你需要的标签
+	span.SetTag("mykey", "myvalue")
+
+	// 然后继续原来的RPC处理
+	return handler(ctx, req)
+}
 
 func main() {
 	os.Setenv("JAEGER_SERVICE_NAME", "myservice")
@@ -102,6 +111,7 @@ func main() {
 	//
 	s := grpc.NewServer(
 		grpc.ChainUnaryInterceptor(
+			myInterceptor,
 			grpc_opentracing.UnaryServerInterceptor(),
 			loggingUnaryServerInterceptor,
 		),
