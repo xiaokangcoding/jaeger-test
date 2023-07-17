@@ -126,7 +126,7 @@ func main() {
 	//
 	s := grpc.NewServer(
 		grpc.ChainUnaryInterceptor(
-			myInterceptor,
+			//myInterceptor,
 			grpc_opentracing.UnaryServerInterceptor(),
 			loggingUnaryServerInterceptor,
 		),
