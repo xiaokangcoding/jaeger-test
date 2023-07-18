@@ -33,7 +33,7 @@ func main() {
 	failOnError(err, "Failed to declare an exchange")
 
 	q, err := ch.QueueDeclare(
-		"",    // name
+		"simple-queue",    // name
 		false, // durable
 		false, // delete when unused
 		true,  // exclusive
