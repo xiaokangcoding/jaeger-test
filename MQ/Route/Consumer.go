@@ -26,7 +26,7 @@ func main() {
 	)
 	util.FailOnError(err, "Failed to declare an exchange")
 
-	queues := []string{"hello1", "hello2", "simple_queue"}
+	queues := []string{"hello1", "hello2", "simple-queue"}
 	routingKeys := []string{"email", "email", "weixin"}
 
 	forever := make(chan bool)
