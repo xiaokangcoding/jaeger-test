@@ -34,7 +34,7 @@ func main() {
 	for i, queueName := range queues {
 		q, err := ch.QueueDeclare(
 			queueName, // name
-			false,     // durable
+			true ,    // durable
 			false,     // delete when unused
 			false,     // exclusive
 			false,     // no-wait
