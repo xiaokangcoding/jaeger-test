@@ -3,12 +3,11 @@ package main
 
 import (
 	"context"
-	"log"
-	"time"
-
 	hello "github.com/go-micro/examples/greeter/srv/proto/hello"
+	_ "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
+	_ "github.com/opentracing/opentracing-go"
 	"go-micro.dev/v4"
-	"google.golang.org/grpc"
+	"log"
 )
 
 type Say struct{}
@@ -23,6 +22,7 @@ func main() {
 
 	service := micro.NewService(
 		micro.Name("go.micro.srv.greeter"),
+		//micro.WrapHandler(opentracingplugins.NewHandlerWrapper(opentracing.GlobalTracer())),
 	)
 
 	// optionally setup command line usage

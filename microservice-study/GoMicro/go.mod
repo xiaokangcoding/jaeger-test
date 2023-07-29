@@ -4,6 +4,8 @@ go 1.18
 
 require (
 	github.com/go-micro/examples v0.0.0-20230412102204-758a9e786e6a
+	github.com/go-micro/plugins/v4/wrapper/trace/opentracing v1.2.0
+	github.com/opentracing/opentracing-go v1.2.0
 	go-micro.dev/v4 v4.10.2
 	google.golang.org/grpc v1.57.0
 )
