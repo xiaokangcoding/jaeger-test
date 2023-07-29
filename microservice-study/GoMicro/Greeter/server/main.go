@@ -6,10 +6,10 @@ import (
 	hello "github.com/go-micro/examples/greeter/srv/proto/hello"
 	opentracingplugins "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
-	"go-micro.dev/v4"
-	"log"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
+	"go-micro.dev/v4"
+	"log"
 )
 
 type Say struct{}

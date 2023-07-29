@@ -7,7 +7,7 @@ import (
 	"go-micro.dev/v4/client"
 	"go-micro.dev/v4/metadata"
 	"log"
-
+	opentracingplugins "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 
@@ -110,9 +110,11 @@ func main() {
 	}
 	opentracing.SetGlobalTracer(tracer)
 
+	//tracerClient := opentracingplugins.NewClientWrapper(tracer)
 	// create a new service
 	service := micro.NewService(
-		micro.WrapClient(traceClientWrapper()),
+		//micro.WrapClient(traceClientWrapper()),  opentracingplugins
+		micro.WrapClient(opentracingplugins.NewClientWrapper(opentracing.GlobalTracer())),
 	)
 
 	// parse command line flags
