@@ -27,7 +27,10 @@ type traceWrapper struct {
 }
 
 func (t *traceWrapper) Call(ctx context.Context, req client.Request, rsp interface{}, opts ...client.CallOption) error {
-	md, _ := metadata.FromContext(ctx)
+	md, ok := metadata.FromContext(ctx)
+	if !ok {
+		md = make(map[string]string)
+	}
 	spanCtx, _ := opentracing.GlobalTracer().Extract(opentracing.TextMap, opentracing.TextMapCarrier(md))
 	span := opentracing.StartSpan(req.Service()+"."+req.Endpoint(), ext.RPCServerOption(spanCtx))
 	defer span.Finish()
