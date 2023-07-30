@@ -7,6 +7,7 @@ import (
 	"go-micro.dev/v4/client"
 	"go-micro.dev/v4/metadata"
 	"log"
+	wrapperTrace "github.com/micro/go-plugins/wrapper/trace/opentracing/v2"
 	opentracingplugins "github.com/go-micro/plugins/v4/wrapper/trace/opentracing"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
