@@ -22,7 +22,7 @@ func main() {
 	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
-		"fanout-exchange",   // name
+		"fan_Exchange",   // name
 		"fanout", // type
 		true,     // durable
 		false,    // auto-deleted
@@ -33,7 +33,7 @@ func main() {
 	failOnError(err, "Failed to declare an exchange")
 
 	q, err := ch.QueueDeclare(
-		"simple-queue",    // name
+		"test2",    // name
 		false, // durable
 		false, // delete when unused
 		true,  // exclusive
@@ -45,7 +45,7 @@ func main() {
 	err = ch.QueueBind(
 		q.Name, // queue name
 		"",     // routing key
-		"fanout-exchange", // exchange
+		"fan_Exchange", // exchange
 		false,
 		nil)
 	failOnError(err, "Failed to bind a queue")

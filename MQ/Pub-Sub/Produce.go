@@ -24,7 +24,7 @@ func main() {
 	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
-		"fanout-exchange",   // name
+		"fan_Exchange",   // name
 		"fanout", // type
 		true,     // durable
 		false,    // auto-deleted
@@ -36,7 +36,7 @@ func main() {
 
 	body := bodyFrom(os.Args)
 	err = ch.Publish(
-		"fanout-exchange", // exchange
+		"fan_Exchange", // exchange
 		"",     // routing key
 		false,  // mandatory
 		false,  // immediate

@@ -30,7 +30,9 @@ func main(){
 		nil,     // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
-
+/*
+   ch.Consume( ) consumer参数的含义：消费者标识符，用于区分多个消费者。如果你不指定，RabbitMQ 会为你分配一个唯一的值。
+ */
 	msgs, err := ch.Consume(
 		q.Name, // queue
 		"",     // consumer

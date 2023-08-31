@@ -11,7 +11,10 @@ func failOnError(err error, msg string) {
 		log.Panicf("%s: %s", msg, err)
 	}
 }
-
+/*
+简单模式通常使用默认的交换机（也称为默认的直接交换机）。
+在 RabbitMQ 中，每个队列都自动地绑定到默认交换机上，并使用队列的名称作为路由键
+ */
 func main()  {
 	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -33,6 +36,7 @@ func main()  {
 
 	body := "Hello World!"
 
+	//Publish函数第一个参数为空，代表 test1 队列绑定的是默认交换机
 	err = ch.Publish(
 		"",     // exchange
 		q.Name, // routing key
