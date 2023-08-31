@@ -34,7 +34,7 @@ func main() {
 
 	q, err := ch.QueueDeclare(
 		"test2",    // name
-		false, // durable
+		true, // durable
 		false, // delete when unused
 		true,  // exclusive
 		false, // no-wait
