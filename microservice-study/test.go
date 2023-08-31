@@ -1,4 +1,179 @@
-package microservice_study
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+type Counter struct {
+	value chan int
+	done  chan bool
+}
+
+func NewCounter() *Counter {
+	counter := &Counter{
+		value: make(chan int),
+		done:  make(chan bool),
+	}
+
+	go counter.run()
+	return counter
+}
+
+func (c *Counter) run() {
+	var count int
+	for {
+		select {
+		case increment := <-c.value:
+			count += increment
+		case c.done <- true:
+			fmt.Println("Final counter value:", count)
+			close(c.value)
+			close(c.done)
+			return
+		}
+	}
+}
+
+func (c *Counter) Increase() {
+	c.value <- 1
+}
+
+func (c *Counter) Done() {
+	c.done <- true
+}
+
+func main() {
+	counter := NewCounter()
+	var wg sync.WaitGroup
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter.Increase()
+		}()
+	}
+
+	wg.Wait()
+	counter.Done()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//package main
+//
+//import (
+//	"fmt"
+//	_ "sync"
+//	"sync/atomic"
+//)
+//
+//var a string
+//var done bool
+//
+//func setup() {
+//	a = "hello, world"
+//	done = true
+//}
+//
+//func main() {
+//
+//	atomic.AddInt64(&count, 1)
+//	go setup() // 启动一个goroutine
+//
+//	for !done {
+//	} // 等待直到done为true
+//
+//	fmt.Println(a) // 打印a的值
+//}
+
+//func producer(ch chan<- int, d int) {
+//	for i := 0; i < 3; i++ {
+//		ch <- i + d
+//	}
+//}
+//
+//func main() {
+//	ch := make(chan int)
+//	go producer(ch, 1)
+//	go producer(ch, 10)
+//	go producer(ch, 100)
+//
+//	for i := 0; i < 9; i++ {
+//		fmt.Println(<-ch)
+//	}
+//}
+//
+//package main
+
+//import (
+//"fmt"
+//"sync"
+//"sync/atomic"
+//)
+//
+//var count int32
+//
+//func main() {
+//	wg := sync.WaitGroup{}
+//	wg.Add(2)
+//
+//	go func() {
+//		defer wg.Done()
+//		for i := 0; i < 1000; i++ {
+//			atomic.AddInt32(&count, 1)
+//		}
+//	}()
+//
+//	go func() {
+//		defer wg.Done()
+//		for i := 0; i < 1000; i++ {
+//			atomic.AddInt32(&count, 1)
+//		}
+//	}()
+//
+//	wg.Wait()
+//	fmt.Println("Count:", count) // 输出: Count: 2000
+//}
+
+
+
+//func worker(id int, ch <-chan int) {
+//	for n := range ch {
+//		fmt.Printf("Worker %d received %d\n", id, n)
+//	}
+//}
+//
+//func main() {
+//	ch := make(chan int)
+//	for i := 0; i < 3; i++ {
+//		go worker(i, ch)
+//	}
+//	for i := 0; i < 9; i++ {
+//		ch <- i
+//	}
+//	close(ch)
+//}
+
+
+//func main() {
+//	res := time.After(2 * time.Second)
+//	select {
+//	case t := <-res:
+//		fmt.Printf("2秒后，当前时间是: %v\n", t)
+//	}
+//}
+
 ////package main
 ////
 //////func main() {

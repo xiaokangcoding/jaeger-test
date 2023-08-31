@@ -3,9 +3,8 @@ package main
 import (
 	"errors"
 	"github.com/go-redsync/redsync/v4"
-	goredislib "github.com/redis/go-redis/v9"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
-
+	goredislib "github.com/redis/go-redis/v9"
 	logger "github.com/sirupsen/logrus"
 	"time"
 )
@@ -54,7 +53,7 @@ func main() {
 		errChan <- Retry(mutex)
 	}()
 
-	//go Work()
+//	go Work()
 	// 假设我们正在处理一个需要长时间的任务
 	select {
 	case <-time.After(20 * time.Second):
@@ -86,13 +85,15 @@ func Retry(mutex *redsync.Mutex) error {
 	return errors.New("Failed to extend lock")
 }
 
-func Work()  {
-	mutex := rs.NewMutex(mutexname)
-
-	// Obtain a lock for our given mutex. After this is successful, no one else
-	// can obtain the same lock (the same mutex name) until we unlock it.
-	if err := mutex.Lock(); err != nil {
-		logger.Error(err)
-		return
-	}
-}
+//func Work()  {
+//	time.Sleep(time.Second *2)
+//	mutex := rs.NewMutex(mutexname)
+//
+//	// Obtain a lock for our given mutex. After this is successful, no one else
+//	// can obtain the same lock (the same mutex name) until we unlock it.
+//	if err := mutex.Lock(); err != nil {
+//		logger.Error(err)
+//		return
+//	}
+//	time.Sleep(time.Second *10)
+//}
