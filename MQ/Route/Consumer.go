@@ -16,7 +16,7 @@ func main() {
 	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
-		"carl-route", // name
+		"Direct-Exchange", // name
 		"direct",     // type
 		true,         // durable
 		false,        // auto-deleted
@@ -26,8 +26,8 @@ func main() {
 	)
 	util.FailOnError(err, "Failed to declare an exchange")
 
-	queues := []string{"hello1", "hello2", "simple-queue"}
-	routingKeys := []string{"email", "email", "weixin"}
+	queues := []string{"queue1", "queue2", "queue3","queue3"}
+	routingKeys := []string{"email", "sms", "weixin","email"}
 
 	forever := make(chan bool)
 
@@ -45,7 +45,7 @@ func main() {
 		err = ch.QueueBind(
 			q.Name,         // queue name
 			routingKeys[i], // routing key
-			"carl-route",   // exchange
+			"Direct-Exchange",   // exchange
 			false,
 			nil,
 		)

@@ -16,7 +16,7 @@ func main() {
 	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
-		"carl-route",   // name
+		"Direct-Exchange",   // name
 		"direct",  // type
 		true,     // durable
 		false,    // auto-deleted
@@ -31,7 +31,7 @@ func main() {
 	for _, routingKey := range routingKeys {
 		body := "Hello World!"
 		err = ch.Publish(
-			"carl-route",     // exchange
+			"Direct-Exchange",     // exchange
 			routingKey, // routing key
 			false,  // mandatory
 			false,  // immediate
